@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +27,7 @@ namespace WpfSendHttpRequest
         }
 
         private static readonly HttpClient client = new HttpClient();
-        
+        private static string webServer = "https://localhost:44399/ReceiveHttpRequest.aspx";
 
         private async void postBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -39,11 +39,9 @@ namespace WpfSendHttpRequest
 
             var content = new FormUrlEncodedContent(values);
 
-            
-            //string webServer = "http://localhost:62338/Default.aspx"; This will cause redirect and the httpclient will send get request instead of a post request.
-            string webServer = "http://localhost:62338/Default";
 
 
+       
             //If you don't need to receive message from the server, use the following.
             //client.PostAsync(webServer, content);
 
@@ -57,12 +55,12 @@ namespace WpfSendHttpRequest
 
         private async void getBtn_Click(object sender, RoutedEventArgs e)
         {
-            string webServer = "http://localhost:62338/Default";
+            
             string paraStr = "?key1=GET.jpg&key2=良品";
             string httpRequest = webServer + paraStr;
 
             //If you don't need to receive message from the server, use the following.
-            //client.GetStringAsync(httpRequest);
+            //client.GetAsync(httpRequest);
 
             //If the server side doesn't use Response.Write(msgFromServer);Response.End()
             //the webpage's html content will be received by responseString.
@@ -70,6 +68,8 @@ namespace WpfSendHttpRequest
             lbWebServerResponse.Content = "\n" + responseString;
 
             
+
+
         }
     }
 }
