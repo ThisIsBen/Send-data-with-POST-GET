@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,8 +45,6 @@ namespace WpfSendHttpRequest
               };
             postBtnClickCount += 1;
             var content = new FormUrlEncodedContent(values);
-
-
 
 
             //If you don't need to receive message from the server, use the following.
