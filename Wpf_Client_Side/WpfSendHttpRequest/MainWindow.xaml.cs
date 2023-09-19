@@ -26,22 +26,27 @@ namespace WpfSendHttpRequest
             InitializeComponent();
         }
 
+
         private static readonly HttpClient client = new HttpClient();
-        
+        private static string webServer = "https://localhost:44399/ReceiveHttpRequest.aspx";
+
+
+        private static int postBtnClickCount = 0;
+        private static int getBtnClickCount = 0;
 
         private async void postBtn_Click(object sender, RoutedEventArgs e)
         {
+
+
             var values = new Dictionary<string, string>
               {
-                  { "key1", "POST.jpg" },
+                  { "key1", "10"+postBtnClickCount+".jpg" },
                   { "key2", "NG" }
               };
-
+            postBtnClickCount += 1;
             var content = new FormUrlEncodedContent(values);
 
-            
-            //string webServer = "http://localhost:62338/Default.aspx"; This will cause redirect and the httpclient will send get request instead of a post request.
-            string webServer = "http://localhost:62338/Default";
+
 
 
             //If you don't need to receive message from the server, use the following.
@@ -52,24 +57,30 @@ namespace WpfSendHttpRequest
             var response = await client.PostAsync(webServer, content);
             var responseString = await response.Content.ReadAsStringAsync();
 
-            lbWebServerResponse.Content = "\n"+responseString;
+            lbWebServerResponse.Content += "\n" + responseString;
         }
 
         private async void getBtn_Click(object sender, RoutedEventArgs e)
         {
-            string webServer = "http://localhost:62338/Default";
-            string paraStr = "?key1=GET.jpg&key2=良品";
+
+            string paraStr = "?key1=50" + getBtnClickCount + ".jpg&key2=良品";
+            getBtnClickCount += 1;
             string httpRequest = webServer + paraStr;
 
             //If you don't need to receive message from the server, use the following.
-            //client.GetStringAsync(httpRequest);
+            //client.GetAsync(httpRequest);
 
             //If the server side doesn't use Response.Write(msgFromServer);Response.End()
             //the webpage's html content will be received by responseString.
             var responseString = await client.GetStringAsync(httpRequest);
-            lbWebServerResponse.Content = "\n" + responseString;
+            lbWebServerResponse.Content += "\n" + responseString;
 
-            
+
+
+
         }
+
+
+
     }
 }
